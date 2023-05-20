@@ -324,5 +324,5 @@ class DemoViewModel : ViewModel() {
         ),
     )
 
-    val selectedTopicIndex = mutableStateOf(0)
+    val selectedTopic = mutableStateOf(topics.first())
 }

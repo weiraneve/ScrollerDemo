@@ -88,6 +88,7 @@ fun TaskListWithScroller(
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
+    // todo ---- 划线区域内是关于，滑动topic选中的处理逻辑
     var offsetMessage by remember { mutableStateOf(1) }
 
     Row {
@@ -95,23 +96,17 @@ fun TaskListWithScroller(
         Text(text = offsetMessage.toString(), fontSize = 100.sp)
     }
 
-    var previousIndex by remember { mutableStateOf(0) }
-
-    LaunchedEffect(lazyListState.firstVisibleItemScrollOffset) {
-        snapshotFlow { lazyListState.firstVisibleItemIndex }
-            .collect { currentIndex ->
-                if (lazyListState.firstVisibleItemScrollOffset >= 0) {
-                    if (currentIndex > previousIndex) {
-                        viewModel.selectedTopicIndex.value += 1
-                        offsetMessage += 1
-                    } else if (currentIndex < previousIndex) {
-                        viewModel.selectedTopicIndex.value -= 1
-                        offsetMessage -= 1
-                    }
-                    previousIndex = currentIndex
-                }
+    LaunchedEffect(lazyListState) {
+        snapshotFlow { lazyListState.firstVisibleItemIndex }.collect { index ->
+            val currentTopic = viewModel.topics.find { it.id == index }
+            if (currentTopic != null) {
+                viewModel.selectedTopic.value = currentTopic
             }
+            offsetMessage = lazyListState.firstVisibleItemIndex
+        }
     }
+    // todo ----
+
 
     Row(
         modifier = Modifier.fillMaxSize(),
@@ -189,7 +184,7 @@ private fun AlphabetScroller(
             Text(
                 modifier = Modifier
                     .height(alphabetItemSize)
-                    .background(if (content == viewModel.topics[viewModel.selectedTopicIndex.value].name) Color.LightGray else Color.Transparent),
+                    .background(if (content == viewModel.selectedTopic.value.name) Color.LightGray else Color.Transparent),
                 text = content,
             )
         }

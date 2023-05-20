@@ -46,7 +46,7 @@ import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun ConditionScreen(viewModel: ConditionViewModel = viewModel()) {
+fun DemoScreen(viewModel: DemoViewModel = viewModel()) {
     val context = LocalDensity.current
     val alphabetHeightInPixels = remember { with(context) { alphabetItemSize.toPx() } }
     var alphabetRelativeDragYOffset: Float? by remember { mutableStateOf(null) }
@@ -81,7 +81,7 @@ fun ConditionScreen(viewModel: ConditionViewModel = viewModel()) {
 fun TaskListWithScroller(
     taskItems: List<TaskItem>,
     topics: List<Topic>,
-    viewModel: ConditionViewModel,
+    viewModel: DemoViewModel,
     onAlphabetListDrag: (Float?, Float) -> Unit,
 ) {
     val alphabetHeightInPixels = with(LocalDensity.current) { alphabetItemSize.toPx() }
@@ -156,7 +156,7 @@ fun TaskListWithScroller(
 @Composable
 private fun AlphabetScroller(
     topics: List<Topic>,
-    viewModel: ConditionViewModel,
+    viewModel: DemoViewModel,
     onAlphabetListDrag: (relativeDragYOffset: Float?, distanceFromTopOfScreen: Float) -> Unit,
 ) {
     val alphabetList = topics.map { it.name }

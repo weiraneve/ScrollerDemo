@@ -3,7 +3,7 @@ package com.weiran.scrollerdemo.demo
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
-class ConditionViewModel : ViewModel() {
+class DemoViewModel : ViewModel() {
     val topics = listOf(
         Topic(id = 1, name = "Topic 1"),
         Topic(id = 2, name = "Topic 2"),
